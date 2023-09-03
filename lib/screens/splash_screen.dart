@@ -13,13 +13,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
-@override
+  @override
   void initState() {
-   Timer(const Duration(seconds: 5), () {
-
-    Navigator.pushReplacement(context, CupertinoDialogRoute(builder: (context)=> const HomeScreen(), context: context));
+    Timer(const Duration(seconds: 5), () {
+      Navigator.push(
+          context,
+          CupertinoDialogRoute(
+              builder: (context) => const HomeScreen(), context: context));
     });
     super.initState();
   }
@@ -27,14 +27,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return  Scaffold(
-      backgroundColor:  primaryColor,
-
-     
-      body:  Center(child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Image.asset("assets/inverted_logo.png" , width: size.width * 0.8,),
-      ),),
+    return Scaffold(
+      backgroundColor: primaryColor,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Hero(
+              tag: 'logo',
+              child: Image.asset(
+                "assets/inverted_logo.png",
+                width: size.width * 0.8,
+              )),
+        ),
+      ),
     );
   }
 }

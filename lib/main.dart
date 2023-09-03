@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_app/helpers/consts.dart';
+import 'package:marvel_app/providers/movies_provider.dart';
 import 'package:marvel_app/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,19 +14,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-    debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-      
-        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          elevation: 0
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MoviesProvider>(create: (context)=> MoviesProvider())
+      ],
+      child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+        
+          colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+    
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            elevation: 0
+          ),
+          useMaterial3: false,
         ),
-        useMaterial3: false,
+        home: const SplashScreen()
       ),
-      home: const SplashScreen()
     );
   }
 }

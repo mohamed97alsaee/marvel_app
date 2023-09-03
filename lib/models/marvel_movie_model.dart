@@ -6,6 +6,7 @@ class MarvelMovieModel {
     String releaseDate;
     String boxOffice;
     int duration;
+    String? overview;
     String coverUrl;
     String? trailerUrl;
     String directedBy;
@@ -22,6 +23,7 @@ class MarvelMovieModel {
         required this.releaseDate,
         required this.boxOffice,
         required this.duration,
+         this.overview,
         required this.coverUrl,
          this.trailerUrl,
         required this.directedBy,
@@ -43,8 +45,9 @@ class MarvelMovieModel {
         releaseDate: json["release_date"],
         boxOffice: json["box_office"],
         duration: json["duration"],
+        overview: json["overview"],
         coverUrl: json["cover_url"],
-        trailerUrl: json["trailer_url"] ,
+        trailerUrl: json["trailer_url"],
         directedBy: json["directed_by"],
         phase: json["phase"],
         saga: json["saga"],
@@ -60,6 +63,7 @@ class MarvelMovieModel {
         "release_date": releaseDate,
         "box_office": boxOffice,
         "duration": duration,
+        "overview": overview,
         "cover_url": coverUrl,
         "trailer_url": trailerUrl,
         "directed_by": directedBy,
