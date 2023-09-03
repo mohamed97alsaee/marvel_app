@@ -38,6 +38,7 @@ dependencies:
   path_provider:
   http:
   shimmer:
+  shared_preferences:
 dev_dependencies:
   flutter_test:
     sdk: flutter
