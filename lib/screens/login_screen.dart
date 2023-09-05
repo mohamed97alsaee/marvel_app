@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel_app/main.dart';
 import 'package:marvel_app/providers/auth_provider.dart';
@@ -39,7 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
             // ,
 
             onChanged: () {
-              print(phoneController.text);
+              if (kDebugMode) {
+                print(phoneController.text);
+              }
               validation();
             },
             child: Column(
