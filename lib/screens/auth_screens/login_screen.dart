@@ -1,9 +1,10 @@
+import 'package:marvel_app/screens/auth_screens/register_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel_app/main.dart';
 import 'package:marvel_app/providers/auth_provider.dart';
-import 'package:marvel_app/screens/register_screen.dart';
 import 'package:marvel_app/widgets/input_field.dart';
 import 'package:provider/provider.dart';
 

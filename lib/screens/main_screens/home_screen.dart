@@ -4,7 +4,7 @@ import 'package:marvel_app/helpers/consts.dart';
 import 'package:marvel_app/main.dart';
 import 'package:marvel_app/providers/auth_provider.dart';
 import 'package:marvel_app/providers/movies_provider.dart';
-import 'package:marvel_app/screens/profile_screen.dart';
+import 'package:marvel_app/screens/drawer_screens/profile_screen.dart';
 import 'package:marvel_app/widgets/custom_icons_button.dart';
 import 'package:marvel_app/widgets/movie_card.dart';
 import 'package:provider/provider.dart';

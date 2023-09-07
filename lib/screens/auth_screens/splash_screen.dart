@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel_app/helpers/consts.dart';
-import 'package:marvel_app/screens/home_screen.dart';
+import 'package:marvel_app/screens/main_screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -1,10 +1,12 @@
+import 'package:marvel_app/screens/auth_screens/login_screen.dart';
+import 'package:marvel_app/screens/auth_screens/splash_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:marvel_app/helpers/consts.dart';
 import 'package:marvel_app/providers/auth_provider.dart';
 import 'package:marvel_app/providers/movies_provider.dart';
-import 'package:marvel_app/screens/home_screen.dart';
-import 'package:marvel_app/screens/login_screen.dart';
-import 'package:marvel_app/screens/splash_screen.dart';
+import 'package:marvel_app/screens/main_screens/home_screen.dart';
+
 import 'package:provider/provider.dart';
 
 void main() {
