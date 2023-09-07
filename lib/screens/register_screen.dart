@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel_app/main.dart';
 import 'package:marvel_app/providers/auth_provider.dart';
+import 'package:marvel_app/widgets/input_field.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,9 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool btnEnable = false;
 
   TextEditingController nameController = TextEditingController();
-
   TextEditingController phoneController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmationController =
       TextEditingController();
@@ -53,12 +52,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   "Create Account",
                   style: TextStyle(fontSize: 20),
                 ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                InputField(
                   controller: nameController,
-                  decoration: const InputDecoration(
-                      hintText: "Name",
-                      hintStyle: TextStyle(color: Colors.grey)),
+                  hintText: "name",
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "please enter name";
@@ -70,12 +66,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                 ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                InputField(
                   controller: phoneController,
-                  decoration: const InputDecoration(
-                      hintText: "phone",
-                      hintStyle: TextStyle(color: Colors.grey)),
+                  hintText: "phone",
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "please enter phone";
@@ -87,22 +80,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                 ),
-                TextFormField(
-                  obscureText: hidePass,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                InputField(
+                  obSecure: true,
                   controller: passwordController,
-                  decoration: InputDecoration(
-                      suffix: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              hidePass = !hidePass;
-                            });
-                          },
-                          child: Icon(hidePass
-                              ? Icons.visibility
-                              : Icons.visibility_off)),
-                      hintText: "password",
-                      hintStyle: const TextStyle(color: Colors.grey)),
+                  hintText: "password",
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "please enter password";
@@ -114,22 +95,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                 ),
-                TextFormField(
-                  obscureText: hidePass,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                InputField(
                   controller: passwordConfirmationController,
-                  decoration: InputDecoration(
-                      suffix: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              hidePass = !hidePass;
-                            });
-                          },
-                          child: Icon(hidePass
-                              ? Icons.visibility
-                              : Icons.visibility_off)),
-                      hintText: "password Confirmation",
-                      hintStyle: const TextStyle(color: Colors.grey)),
+                  hintText: "password confirmation",
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "please enter password confirmation";

@@ -2,15 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:marvel_app/models/user_model.dart';
+import 'package:marvel_app/services/api.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class AuthProvider with ChangeNotifier {
+  Api api = Api();
   String? token;
   late bool authenticated;
   bool isLoading = false;
-
+  UserModel? currentUserModel;
   setLoading(bool val) {
     Timer(const Duration(milliseconds: 50), () {
       isLoading = val;
@@ -41,19 +43,9 @@ class AuthProvider with ChangeNotifier {
     Map<String, dynamic> userBody,
   ) async {
     setLoading(true);
-    final response = await http.post(
-        Uri.parse("https://api.ha-k.ly/api/v1/client/auth/login"),
-        body: json.encode(userBody),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        });
-
+    final response = await api.post(
+        "https://api.ha-k.ly/api/v1/client/auth/login", userBody);
     if (response.statusCode == 201) {
-      if (kDebugMode) {
-        print("RESPONSE STATUSCODE : ${response.statusCode}");
-        print("RESPONSE BODEY : ${response.body}");
-      }
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var decodedToken = json.decode(response.body)['token'];
       prefs.setString("token", decodedToken);
@@ -62,10 +54,6 @@ class AuthProvider with ChangeNotifier {
 
       return [true, "loged in"];
     } else {
-      if (kDebugMode) {
-        print("RESPONSE STATUSCODE : ${response.statusCode}");
-        print("RESPONSE BODEY : ${response.body}");
-      }
       setAuthenticated(false);
       setLoading(false);
 
@@ -78,19 +66,10 @@ class AuthProvider with ChangeNotifier {
   ) async {
     setLoading(true);
 
-    final response = await http.post(
-        Uri.parse("https://api.ha-k.ly/api/v1/client/auth/register"),
-        body: json.encode(userBody),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        });
+    final response = await api.post(
+        "https://api.ha-k.ly/api/v1/client/auth/register", userBody);
 
     if (response.statusCode == 201) {
-      if (kDebugMode) {
-        print("RESPONSE STATUSCODE : ${response.statusCode}");
-        print("RESPONSE BODEY : ${response.body}");
-      }
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var decodedToken = json.decode(response.body)['token'];
       prefs.setString("token", decodedToken);
@@ -99,15 +78,22 @@ class AuthProvider with ChangeNotifier {
 
       return [true, "loged in"];
     } else {
-      if (kDebugMode) {
-        print("RESPONSE STATUSCODE : ${response.statusCode}");
-        print("RESPONSE BODEY : ${response.body}");
-      }
       setAuthenticated(false);
       setLoading(false);
 
       return [false, json.decode(response.body)['message']];
     }
+  }
+
+  getCurrentUser() async {
+    setLoading(true);
+
+    final response = await api.get("https://api.ha-k.ly/api/v1/client/auth/me");
+
+    if (response.statusCode == 200) {
+      currentUserModel = UserModel.fromJson(json.decode(response.body)['data']);
+    } else {}
+    setLoading(false);
   }
 
   Future<bool> logout() async {

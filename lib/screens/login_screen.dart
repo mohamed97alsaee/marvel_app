@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:marvel_app/main.dart';
 import 'package:marvel_app/providers/auth_provider.dart';
 import 'package:marvel_app/screens/register_screen.dart';
+import 'package:marvel_app/widgets/input_field.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -53,12 +54,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Login",
                   style: TextStyle(fontSize: 20),
                 ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                InputField(
                   controller: phoneController,
-                  decoration: const InputDecoration(
-                      hintText: "email",
-                      hintStyle: TextStyle(color: Colors.grey)),
+                  hintText: "phone",
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "please enter email";
@@ -70,22 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                TextFormField(
-                  obscureText: hidePass,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                InputField(
                   controller: passwordController,
-                  decoration: InputDecoration(
-                      suffix: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              hidePass = !hidePass;
-                            });
-                          },
-                          child: Icon(hidePass
-                              ? Icons.visibility
-                              : Icons.visibility_off)),
-                      hintText: "password",
-                      hintStyle: const TextStyle(color: Colors.grey)),
+                  hintText: "password",
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "please enter password";
