@@ -13,20 +13,17 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  bool isValidForm = false;
-  validation() async {
-    if (phoneController.text.isNotEmpty &&
-        phoneController.text.length == 9 &&
-        passwordController.text.length >= 8) {
-      isValidForm = true;
-    } else {
-      isValidForm = false;
-    }
-    setState(() {});
-  }
+  bool btnEnable = false;
+
+  TextEditingController nameController = TextEditingController();
 
   TextEditingController phoneController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordConfirmationController =
+      TextEditingController();
+
+  final GlobalKey<FormState> _registerForm = GlobalKey<FormState>();
 
   bool hidePass = true;
   @override
@@ -39,14 +36,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Form(
-            // key:
-            // ,
-
+            key: _registerForm,
             onChanged: () {
               if (kDebugMode) {
                 print(phoneController.text);
               }
-              validation();
+
+              setState(() {
+                btnEnable = _registerForm.currentState!.validate();
+              });
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,16 +55,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: phoneController,
+                  controller: nameController,
                   decoration: const InputDecoration(
-                      hintText: "email",
+                      hintText: "Name",
                       hintStyle: TextStyle(color: Colors.grey)),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "please enter email";
+                      return "please enter name";
+                    }
+                    if (value.length < 2) {
+                      return "user name must be 2 chars";
+                    }
+
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: phoneController,
+                  decoration: const InputDecoration(
+                      hintText: "phone",
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "please enter phone";
                     }
                     if (value.length < 8) {
-                      return "user email must be 8 chars";
+                      return "user phone must be 8 chars";
                     }
 
                     return null;
@@ -99,13 +114,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                 ),
+                TextFormField(
+                  obscureText: hidePass,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: passwordConfirmationController,
+                  decoration: InputDecoration(
+                      suffix: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              hidePass = !hidePass;
+                            });
+                          },
+                          child: Icon(hidePass
+                              ? Icons.visibility
+                              : Icons.visibility_off)),
+                      hintText: "password Confirmation",
+                      hintStyle: const TextStyle(color: Colors.grey)),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "please enter password confirmation";
+                    }
+                    if (value.length < 8) {
+                      return "password must be 8 chars";
+                    }
+
+                    if (value != passwordController.text) {
+                      return "passwords does not match";
+                    }
+
+                    return null;
+                  },
+                ),
                 TextButton(
                     onPressed: () {
-                      if (isValidForm) {
-                        Provider.of<AuthProvider>(context, listen: false).login(
+                      setState(() {
+                        btnEnable = _registerForm.currentState!.validate();
+                      });
+                      if (btnEnable) {
+                        Provider.of<AuthProvider>(context, listen: false)
+                            .register(
                           {
-                            "phone": phoneController.text.toString(),
-                            "password": passwordController.text.toString(),
+                            "name": nameController.text,
+                            "phone": phoneController.text,
+                            "password": passwordController.text,
+                            "password_confirmation":
+                                passwordConfirmationController.text,
                             "device_name": "iphone"
                           },
                         ).then((logedIn) {
@@ -135,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Text(
                       "Sign Up",
                       style: TextStyle(
-                          color: isValidForm ? Colors.blue : Colors.grey),
+                          color: btnEnable ? Colors.blue : Colors.grey),
                     ))
               ],
             ),

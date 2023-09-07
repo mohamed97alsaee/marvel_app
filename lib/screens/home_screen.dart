@@ -33,9 +33,18 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SafeArea(
             child: Column(
               children: [
-                const ListTile(
-                  title: Text("About"),
-                  trailing: Icon(Icons.info),
+                GestureDetector(
+                  onTap: () {
+                    // TODO : Here add Profile Navigation
+                  },
+                  child: const ListTile(
+                    title: Text("My Profile"),
+                    trailing: Icon(
+                      Icons.person,
+                      size: 30,
+                      color: Colors.blue,
+                    ),
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {},
@@ -89,8 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
         body: AnimatedSwitcher(
           duration: const Duration(microseconds: 300),
           child: moviesConsumer.isFailed
-
-              // TODO : Add RefreshIndicator here at the top of SizedBox
               ? SizedBox(
                   height: size.height * 1.1,
                   child: Center(
