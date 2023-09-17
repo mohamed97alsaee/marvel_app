@@ -40,6 +40,7 @@ dependencies:
   shimmer:
   url_launcher:
   shared_preferences:
+  firebase_core:
 dev_dependencies:
   flutter_test:
     sdk: flutter

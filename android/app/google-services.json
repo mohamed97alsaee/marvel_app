@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "27221112177",
+    "project_id": "marvel-fb",
+    "storage_bucket": "marvel-fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27221112177:android:30d260be03dbdbbc3cb2d0",
+        "android_client_info": {
+          "package_name": "com.example.marvel_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzCXqols-If81OCyrdS-BeqvqZPQndh0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
