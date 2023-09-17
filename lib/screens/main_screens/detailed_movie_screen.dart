@@ -4,6 +4,7 @@ import 'package:marvel_app/helpers/helper_functions.dart';
 import 'package:marvel_app/models/marvel_movie_model.dart';
 import 'package:marvel_app/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailedMovieScreen extends StatefulWidget {
   const DetailedMovieScreen({super.key, required this.marvelMovieModel});
@@ -18,6 +19,18 @@ class _DetailedMovieScreenState extends State<DetailedMovieScreen> {
     Provider.of<MoviesProvider>(context, listen: false)
         .fetchDetailedMovie(widget.marvelMovieModel.id.toString());
     super.initState();
+  }
+
+  _launchUrl(String url) async {
+    canLaunchUrl(Uri.parse(url)).then((launcable) {
+      if (launcable) {
+        launchUrl(Uri.parse(url));
+      } else {
+        if (kDebugMode) {
+          print("Failed to Launch");
+        }
+      }
+    });
   }
 
   @override
@@ -121,7 +134,12 @@ class _DetailedMovieScreenState extends State<DetailedMovieScreen> {
                                 height: 16,
                               ),
                               TextButton(
-                                  onPressed: () {}, child: Text('TRAILER')),
+                                  onPressed: () {
+                                    _launchUrl(moviesConsumer
+                                        .currentMovie!.trailerUrl
+                                        .toString());
+                                  },
+                                  child: const Text('TRAILER')),
                             ],
                           ),
                         const SizedBox(
